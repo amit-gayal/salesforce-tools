@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 export default class AudioPlayer extends LightningElement {
-	@api
+    @api
     audioUrl = '';
     
     @api
@@ -14,7 +14,7 @@ export default class AudioPlayer extends LightningElement {
     avatarUrl = '';
     
     @api
-	avatarIcon = '';
+    avatarIcon = '';
 
     @api
     showVolumeBar = false;
@@ -179,7 +179,6 @@ export default class AudioPlayer extends LightningElement {
         } else {
             // start
             this.isProgressing = true;
-            // eslint-disable-next-line @lwc/lwc/no-async-operation
             this._interval = setInterval(() => {
                 this.progress = this.progress === 100 ? 0 : this.progress + 1;
             }, 200);
