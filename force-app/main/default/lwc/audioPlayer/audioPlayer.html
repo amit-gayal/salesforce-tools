@@ -1,67 +1,78 @@
 <template>
-    <div class="slds-grid slds-wrap slds-m-horizontal_large">
-		<div class="slds-col slds-size_1-of-1 slds-m-bottom_large">
-			<div style="float:left">{currentMarker}</div>
-			<div style="float:right">{fullLength}</div>
-			<br/>
-			<lightning-progress-bar value={progress} variant="circular"></lightning-progress-bar>
+	<lightning-card>
+		<h3 slot="title">
+            <lightning-avatar variant={avatarVariant} 
+							  src={avatarUrl}
+							  fallback-icon-name={avatarIcon} 
+							  alternative-text={title}
+							  class="slds-m-right_medium">
+			</lightning-avatar>
+            {title}
+        </h3>
+		<div class="slds-grid slds-wrap slds-m-horizontal_large">
+			<div class="slds-col slds-size_1-of-1 slds-m-bottom_large">
+				<div style="float:left">{currentMarker}</div>
+				<div style="float:right">{fullLength}</div>
+				<br/>
+				<lightning-progress-bar value={progress} variant="circular"></lightning-progress-bar>
+			</div>
+			<div class="slds-col slds-size_1-of-1 slds-m-vertical_small" if:true={showVolumeBar}>
+				<label for="vol" class="slds-text-heading_small">Volume</label>
+				<input type="range" 
+					id="vol" 
+					name="vol"
+					min="0"
+					value={currentVolume}
+					max="1"
+					step="0.1"
+					class="slds-size_full volslide"
+					onchange={handleVolumeSlider}>
+			</div>
+			<div class="slds-col slds-size_1-of-5 slds-text-align--center">
+				<lightning-button-icon icon-name="utility:play" 
+									onclick={handleControls}
+									name="play"
+									variant="brand"
+									class="play"></lightning-button-icon>
+			</div>
+			<div class="slds-col slds-size_1-of-5 slds-text-align--center">
+				<lightning-button-icon icon-name="utility:pause" 
+									onclick={handleControls}
+									name="pause"
+									variant="brand"
+									class="pause"
+									disabled="true"></lightning-button-icon>
+			</div>
+			<div class="slds-col slds-size_1-of-5 slds-text-align--center">
+				<lightning-button-icon icon-name="utility:volume_off" 
+									onclick={handleControls}
+									name="mute"
+									variant="destructive"
+									class="mute"></lightning-button-icon>
+			</div>
+			<div class="slds-col slds-size_1-of-5 slds-text-align--center">
+				<lightning-button-icon icon-name="utility:volume_low" 
+									onclick={handleControls}
+									name="lowvolume"
+									variant="brand"
+									class="low"></lightning-button-icon>
+			</div>
+			<div class="slds-col slds-size_1-of-5 slds-text-align--center">
+				<lightning-button-icon icon-name="utility:volume_high" 
+									onclick={handleControls}
+									name="highvolume"
+									variant="brand"
+									class="high"></lightning-button-icon>
+			</div>
+			<audio src={audioUrl} 
+				class="voicemail" 
+				preload="auto" 
+				ontimeupdate={handlePlaying}
+				onloadedmetadata={handleMetadata}
+				onended={handleEnd}>
+				Your browser does not support the
+				<code>audio</code> element.
+			</audio>
 		</div>
-		<div class="slds-col slds-size_1-of-1 slds-m-vertical_small">
-			<label for="vol" class="slds-text-heading_small">Volume</label>
-			<input type="range" 
-				   id="vol" 
-				   name="vol"
-				   min="0"
-				   value={currentVolume}
-				   max="1"
-				   step="0.1"
-				   class="slds-size_full volslide"
-				   onchange={handleVolumeSlider}>
-		</div>
-		<div class="slds-col slds-size_1-of-5 slds-text-align--center">
-			<lightning-button-icon icon-name="utility:play" 
-								   onclick={handleControls}
-								   name="play"
-								   variant="brand"
-								   class="play"></lightning-button-icon>
-		</div>
-		<div class="slds-col slds-size_1-of-5 slds-text-align--center">
-			<lightning-button-icon icon-name="utility:pause" 
-								   onclick={handleControls}
-								   name="pause"
-								   variant="brand"
-								   class="pause"
-								   disabled="true"></lightning-button-icon>
-		</div>
-		<div class="slds-col slds-size_1-of-5 slds-text-align--center">
-			<lightning-button-icon icon-name="utility:volume_off" 
-								   onclick={handleControls}
-								   name="mute"
-								   variant="destructive"
-								   class="mute"></lightning-button-icon>
-		</div>
-		<div class="slds-col slds-size_1-of-5 slds-text-align--center">
-			<lightning-button-icon icon-name="utility:volume_low" 
-								   onclick={handleControls}
-								   name="lowvolume"
-								   variant="brand"
-								   class="low"></lightning-button-icon>
-		</div>
-		<div class="slds-col slds-size_1-of-5 slds-text-align--center">
-			<lightning-button-icon icon-name="utility:volume_high" 
-								   onclick={handleControls}
-								   name="highvolume"
-								   variant="brand"
-								   class="high"></lightning-button-icon>
-		</div>
-		<audio src={audioUrl} 
-			   class="voicemail" 
-			   preload="auto" 
-			   ontimeupdate={handlePlaying}
-			   onloadedmetadata={handleMetadata}
-			   onended={handleEnd}>
-			Your browser does not support the
-			<code>audio</code> element.
-		</audio>
-	</div>
+	</lightning-card>
 </template>

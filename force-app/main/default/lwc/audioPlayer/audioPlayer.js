@@ -2,10 +2,29 @@ import { LightningElement, api } from 'lwc';
 
 export default class AudioPlayer extends LightningElement {
 	@api
-	audioUrl = '';
+    audioUrl = '';
+    
+    @api
+    title = 'Audio Player';
+    
+    @api
+    avatarVariant = 'circle';
+    
+    @api
+    avatarUrl = '';
+    
+    @api
+	avatarIcon = '';
+
+    @api
+    showVolumeBar = false;
 
     @api
     currentVolume = 0.5;
+
+    @api
+    enableLogging = false;
+
     hasLoaded = false;
     fullLength = '--:--';
     currentMarker = '--:--';
@@ -14,7 +33,7 @@ export default class AudioPlayer extends LightningElement {
     isValidAudio = false;
 
     connectedCallback() {
-        console.log('Audio url: ' + this.audioUrl);
+        this.writeLog('Audio url: ' + this.audioUrl);
     }
 
     renderedCallback() {
@@ -30,7 +49,7 @@ export default class AudioPlayer extends LightningElement {
                     isValid: this.isValidAudion
                 }
             }));
-            console.log('duration ' + this.voicemail.duration);
+            this.writeLog('duration ' + this.voicemail.duration);
         }
     }
 
@@ -52,14 +71,14 @@ export default class AudioPlayer extends LightningElement {
     }
 
     handlePlaying(e) {
-        //console.log('currentMarker ' + this.voicemail.currentTime);
+        this.writeLog('currentMarker ' + this.voicemail.currentTime);
         //this.currentMarker = (this.voicemail.currentTime.toFixed(2)).replace('.',':')
         this.currentMarker = this.parseTime(this.voicemail.currentTime);
         this.progress = (this.voicemail.currentTime / this.voicemail.duration).toFixed(2) * 100;
-        // console.log('========================================');
-        // console.log('currentMarker ' + this.currentMarker);
-        // console.log('progress ' + this.progress);
-        // console.log('========================================');
+        this.writeLog('========================================');
+        this.writeLog('currentMarker ' + this.currentMarker);
+        this.writeLog('progress ' + this.progress);
+        this.writeLog('========================================');
     }
 
     handleEnd(e) {
@@ -77,16 +96,16 @@ export default class AudioPlayer extends LightningElement {
     handleControls(e) {
         if (e && e.target.name && this.voicemail) {
             let curVol = (this.voicemail.volume).toFixed(2);
-            console.log('Play duration ' + this.voicemail.duration);
+            this.writeLog('Play duration ' + this.voicemail.duration);
             switch (e.target.name) {
                 case 'play':
-                    console.log('Play duration ' + this.voicemail.currentTime);
+                    this.writeLog('Play duration ' + this.voicemail.currentTime);
                     this.voicemail.play();
                     e.target.disabled = true;
                     this.getControl('pause').disabled = false;
                     break;
                 case 'pause':
-                    console.log('Pause duration ' + this.voicemail.currentTime);
+                    this.writeLog('Pause duration ' + this.voicemail.currentTime);
                     this.voicemail.pause();
                     this.getControl('play').disabled = false;
                     e.target.disabled = true;
@@ -103,7 +122,7 @@ export default class AudioPlayer extends LightningElement {
                     }
                     break;
                 case 'lowvolume': 
-                    console.log('>> Current volume; ' + this.voicemail.volume);
+                    this.writeLog('>> Current volume; ' + this.voicemail.volume);
                     if (this.voicemail.volume - 0.1 >= 0) {
                         this.voicemail.volume -= 0.1;
                     }
@@ -117,10 +136,10 @@ export default class AudioPlayer extends LightningElement {
                     
                     //Slide down
                     this.currentVolume = this.voicemail.volume;
-                    console.log('<< New volume; ' + this.voicemail.volume);
+                    this.writeLog('<< New volume; ' + this.voicemail.volume);
                     break;
                 case 'highvolume': 
-                    console.log('>> Current volume; ' + this.voicemail.volume);
+                    this.writeLog('>> Current volume; ' + this.voicemail.volume);
                     if (this.voicemail.volume + 0.1 <= 1) {
                         this.voicemail.volume += 0.1;
                     }
@@ -135,7 +154,7 @@ export default class AudioPlayer extends LightningElement {
                     //Slide up
                     this.currentVolume = this.voicemail.volume;
                     
-                    console.log('<< New volume; ' + this.voicemail.volume);
+                    this.writeLog('<< New volume; ' + this.voicemail.volume);
                     break;
             }
         }
@@ -169,5 +188,11 @@ export default class AudioPlayer extends LightningElement {
         // and the progress is being increased
         // this code doesn't show in the example
         clearInterval(this._interval);
+    }
+
+    writeLog(ob) {
+        if (this.enableLogging) {
+            console.log(ob);
+        }
     }
 }

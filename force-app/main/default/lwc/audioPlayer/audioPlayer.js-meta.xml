@@ -8,4 +8,50 @@
         <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+            <property label="URL of the audio" 
+                      name="audioUrl" 
+                      type="String"
+                      default=""
+                      required="true"
+                      description="Provide the url of the audio file to play."/>
+            <property label="Default volume" 
+                      name="currentVolume" 
+                      type="String"
+                      default="0.5"
+                      description="Provide the default volume level to load. The value must be between 0 and 1 with 0.1 as difference."/>
+            <property label="Show volume bar?" 
+                      name="showVolumeBar" 
+                      type="Boolean"
+                      default="true"
+                      description="Select if you want to show the volume bar."/>
+            <property label="Enable browser-level logging?" 
+                      name="enableLogging" 
+                      type="Boolean"
+                      default="false"
+                      description="Select if you want to log component data in broswer console. (Feature for developers)"/>
+            <property label="Salesforce icon name" 
+                      name="avatarIcon" 
+                      type="String"
+                      default="standard:custom_notification"
+                      description="Icon that loads in case avatar url does not render any image."/>
+            <property label="Icon url" 
+                      name="avatarUrl" 
+                      type="String"
+                      default=""
+                      description="If you want to load an image as an icon."/>
+            <property label="Icon container" 
+                      name="avatarVariant" 
+                      type="String"
+                      default="Circle"
+                      description="The type of container for icon. The allowed values are circle and square"
+                      datasource="Square,Circle"/>
+            <property label="Player title" 
+                      name="title" 
+                      type="String"
+                      default="Audio Player"
+                      description="Title to render at the top."/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
