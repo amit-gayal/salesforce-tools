@@ -26,6 +26,11 @@
                       type="Boolean"
                       default="true"
                       description="Select if you want to show the volume bar."/>
+            <property label="Show title?" 
+                      name="showTitle" 
+                      type="Boolean"
+                      default="true"
+                      description="Select if you want to show the title and icon."/>
             <property label="Enable browser-level logging?" 
                       name="enableLogging" 
                       type="Boolean"

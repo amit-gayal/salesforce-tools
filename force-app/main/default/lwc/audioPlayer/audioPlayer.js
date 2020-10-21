@@ -25,6 +25,9 @@ export default class AudioPlayer extends LightningElement {
     @api
     enableLogging = false;
 
+    @api
+    showTitle;
+
     hasLoaded = false;
     fullLength = '--:--';
     currentMarker = '--:--';

@@ -1,6 +1,6 @@
 <template>
 	<lightning-card>
-		<h3 slot="title">
+		<h3 slot="title" if:true={showTitle}>
             <lightning-avatar variant={avatarVariant} 
 							  src={avatarUrl}
 							  fallback-icon-name={avatarIcon} 
